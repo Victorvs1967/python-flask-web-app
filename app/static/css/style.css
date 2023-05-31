@@ -1,0 +1,41 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  font-size: 1em;
+}
+
+html,
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 62.5%;
+  line-height: 1.5;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  font-size: 160%;
+}
+
+h1 {
+  font-size: 3.8rem;
+}
+
+h2 {
+  font-size: 2.8rem;
+}
+
+.container {
+  height: 100%;
+  margin: 0 auto;
+  padding: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
