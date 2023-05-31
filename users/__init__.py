@@ -1,20 +1,20 @@
-from app import app
+from flask_jwt_extended import jwt_required
+from app import app, db
 from flask import request
-
-from db import Connection
 from uuid import uuid1
 
+from model import User
 
-db = Connection('flask_mongo_db')
 
-@app.post('/user')
+@app.post('/users')
 def add_user():
   _id = str(uuid1().hex)
 
   content = dict(request.json)
-  content.update({'_id': _id})
 
-  result = db.user.insert_one(content)
+  user = User(_id, content.get('username'), content.get('password'), content.get('email'), content.get('firstName'), content.get('lastName'))
+  result = db.user.insert_one(user.__dict__)
+
   if not result.inserted_id:
     return {'message': 'Failed to add user...'}, 500
 
@@ -32,10 +32,11 @@ def get_users():
     'data': list(users)
   }, 200
 
-@app.get('/user/<user_id>')
+@app.get('/users/<user_id>')
+@jwt_required()
 def get_user(user_id):
   query = {
-    'id': user_id
+    '_id': user_id
   }
   user = db.user.find_one(query)
 
@@ -48,7 +49,8 @@ def get_user(user_id):
     'data': user
   }, 200
 
-@app.delete('/user/<user_id>')
+@app.delete('/users/<user_id>')
+@jwt_required()
 def delete_user(user_id):
   query = {
     '_id': user_id
@@ -64,7 +66,8 @@ def delete_user(user_id):
     'message': 'Delete success...'
   }, 200
 
-@app.put('/user/<user_id>')
+@app.put('/users/<user_id>')
+@jwt_required()
 def update_user(user_id):
   query = {
     '_id': user_id
