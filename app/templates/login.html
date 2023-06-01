@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href={{ url_for('static', filename='css/style.css' ) }}>
+  </head>
 
-</body>
+  <body>
+    <div class="container">
+      <div class="form-signup">
+        <h1 class="form-title">Create User</h1>
+        <form action="/login" method="post">
+          <input class="form-input" type="text" name="username" placeholder="Enter username">
+          <input class="form-input" type="password" name="password" placeholder="Enter password">
+          <input class="btn" type="submit" value="Sign Up">
+        </form>
+      </div>
+    </div>
+  </body>
 </html>

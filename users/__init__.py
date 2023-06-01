@@ -5,25 +5,6 @@ from flask import request
 from model import User
 
 
-@app.post('/users')
-def add_user():
-  content = dict(request.json)
-  user = User(content.get('username'), content.get('password'), content.get('email'), content.get('firstName'), content.get('lastName'))
-
-  if db.user.find_one({ 'username': user.username }):
-    return { 'message': 'Username alredy exist..' }, 500
-  elif db.user.find_one({ 'email': user.email }):
-    return { 'message': 'Email alredy exist..' }, 500
-
-  result = db.user.insert_one(user.__dict__)
-
-  if not result.inserted_id:
-    return {'message': 'Failed to add user...'}, 500
-  return {
-    'message': 'Success',
-    'data': { '_id': result.inserted_id }
-  }, 200
-
 @app.get('/users')
 def get_users():
   users = db.user.find({})
