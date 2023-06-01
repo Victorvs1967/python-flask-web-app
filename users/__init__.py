@@ -1,17 +1,14 @@
 from flask_jwt_extended import jwt_required
 from app import app, db
 from flask import request
-from uuid import uuid1
 
 from model import User
 
 
 @app.post('/users')
 def add_user():
-  _id = str(uuid1().hex)
   content = dict(request.json)
-
-  user = User(_id, content.get('username'), content.get('password'), content.get('email'), content.get('firstName'), content.get('lastName'))
+  user = User(content.get('username'), content.get('password'), content.get('email'), content.get('firstName'), content.get('lastName'))
 
   if db.user.find_one({ 'username': user.username }):
     return { 'message': 'Username alredy exist..' }, 500

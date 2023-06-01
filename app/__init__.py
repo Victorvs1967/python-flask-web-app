@@ -10,6 +10,8 @@ CORS(app)
 
 db = Connection('flask_mongo_db')
 
+items = []
+
 @app.route('/protected')
 @jwt_required()
 def protected():
@@ -23,6 +25,17 @@ def home():
 @app.route('/about')
 def about():
   return render_template('about.html')
+
+@app.route('/signup')
+def signup():
+  username = request.form['username']
+  password = request.form['password']
+  email = request.form['email']
+  firstName = request.form['firstName']
+  lastName = request.form['lastName']
+  user = User(username, password, email, firstName, lastName)
+
+  return render_template('signup.html')
 
 from users import *
 from auth import *
