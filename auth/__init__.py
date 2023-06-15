@@ -6,8 +6,8 @@ from werkzeug.security import check_password_hash
 from model import User
 
 
-app.config['SECRET_KEY'] = 'secret_key'
-
+# secret string generated with code: node -e "console.log(require('crypto').randomBytes(256).toString('base64'));"
+app.config['SECRET_KEY'] = 'Vgy/agSz7ABlTJKjD6uzWStfaPWYXDeruhipj7CxfEpy0enf8h9S6zdmoHV0ADYJdl+Az9biF6VFpSGRI/CK25a697F+j/QvB6PTBH7IckunkaOlU0X/QJXt7S2Qt5szKA7ssj6fjnOPqBSBMx1bBciBEVoMrmqkaL+tbKb0aK1en19FBfRPphYq9EJVSLpoKphXNQSOeLaTnkb20EBqtcG6fk1z7JuXICKsSi/OXT4BPcBYNkFXU6m4jM11Id50QWUgKIJrEGxPlTGX3kBkceO4ZMPd5Z4MDQZ9q0eYT03wkP7dPiUkkDd3B0FSCJjgVXUR0JcXb9+V7nCxOkAbGA=='
 jwt = JWTManager(app)
 
 def authenticate(username, password):
@@ -18,9 +18,6 @@ def authenticate(username, password):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-  # username = request.json.get('username')
-  # password = request.json.get('password')
-
   if request.method == 'POST':
     username = request.form['username']
     password = request.form['password']
@@ -31,17 +28,10 @@ def login():
       return jsonify({ 'token': token })
     return jsonify({ 'error': 'Invalid credentials' }), 401
   elif request.method =='GET':
-    return render_template('login.html')
+    return render_template('login.html', title='Login')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-  # content = dict(request.json)
-  # username = content.get('username')
-  # password = content.get('password')
-  # email = content.get('email')
-  # firstName = content.get('firstName')
-  # lastName = content.get('lastName')
-
   if request.method == 'POST':
     username = request.form['username']
     password = request.form['password']
@@ -65,4 +55,4 @@ def signup():
       'data': { '_id': result.inserted_id }
     }, 200
   elif request.method == 'GET':
-    return render_template('signup.html')
+    return render_template('signup.html', title='Sign Up')

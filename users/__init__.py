@@ -2,13 +2,11 @@ from flask_jwt_extended import jwt_required
 from app import app, db
 from flask import request
 
-from model import User
-
 
 @app.get('/users')
 def get_users():
   users = db.user.find({})
-  return {  'data': list(users) }, 200
+  return { 'data': list(users) }, 200
 
 @app.get('/users/<user_id>')
 @jwt_required()
@@ -26,7 +24,7 @@ def delete_user(user_id):
 
   if not result.deleted_count:
     return { 'message': 'Failed to delete...' }, 500
-  return {  'message': 'Delete success...' }, 200
+  return { 'message': 'Delete success...' }, 200
 
 @app.put('/users/<user_id>')
 @jwt_required()

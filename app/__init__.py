@@ -11,7 +11,7 @@ db = Connection('flask_mongo_db')
 
 @app.route('/')
 def home():
-  return render_template('index.html')
+  return render_template('index.html', title='Home')
 
 @app.route('/about')
 def about():
